@@ -10,6 +10,29 @@
 
 public class BinaryST
 {
+	private int size;
+	private Node head;
+	//private int distinctsize; //not sure if we will need this... what do you think?
+	//private int height; //also not sure about this one
+	private class Node {
+		public Node left;
+		public Node right;
+		public Node parent;
+		public String value;
+		public int vals_in_left_tree; //need this for the rankOf method
+		//public int count; //this could be used in order to store the number of times the string appears... not sure which way is best for doing this
+		
+		public Node(String val){
+			this(null, null, null, val);
+		}
+		public Node(Node left, Node right, Node parent, String val){
+			this.left = left;
+			this.right = right;
+			this.parent = parent;
+			this.value = val;
+		}
+		
+	}
 	// member fields and methods
 	
 	public BinaryST()
