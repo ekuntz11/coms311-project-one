@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 // LEAVE THIS FILE IN THE DEFAULT PACKAGE
 //  (i.e., DO NOT add 'package cs311.pa1;' or similar)
 
@@ -35,11 +37,15 @@ public class BinaryST
 	public BinaryST()
 	{
 		size = 0;
+		height = 0;
 		root = null;
 	}
 	
 	public BinaryST(String[] s)
 	{
+		size = 0;
+		height = 0;
+		root = null;
 		for(int i=0; i<s.length; i++){
 			//the add method will deal with increasing size, distinct size, etc. 
 			this.add(s[i]);
@@ -58,7 +64,7 @@ public class BinaryST
 	
 	public int height()
 	{
-		// implementation
+		return height;
 	}
 	
 	public void add(String s)
@@ -109,13 +115,43 @@ public class BinaryST
 	
 	public String[] inOrder()
 	{
-		// implementation
+		//recursive method returns an inorder array list .toarray converts it to an array
+		return InOrderRec(root, new ArrayList<String>()).toArray(new String[size]);
 	}
+	
+	private ArrayList<String> InOrderRec(Node n, ArrayList<String> arr){
+        if(n.left != null) {
+            PreOrderRec(n.left, arr);
+        }
+        for(int i=0; i < n.count; i++){
+        	arr.add(n.value);
+        }
+        if(n.right != null) {
+            PreOrderRec(n.right, arr);
+        }
+       return arr; 
+        
+    }
 	
 	public String[] preOrder()
 	{
-		// implementation
+		//recursive method returns an preorder array list .toarray converts it to an array
+		return PreOrderRec(root, new ArrayList<String>()).toArray(new String[size]);
 	}
+	
+	private ArrayList<String> PreOrderRec(Node n, ArrayList<String> arr){
+        for(int i=0; i < n.count; i++){
+        	arr.add(n.value);
+        }
+        if(n.left != null) {
+            PreOrderRec(n.left, arr);
+        }
+        if(n.right != null) {
+            PreOrderRec(n.right, arr);
+        }
+       return arr; 
+        
+    }
 	
 	public int rankOf(String s)
 	{
