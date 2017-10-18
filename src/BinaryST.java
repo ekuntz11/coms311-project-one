@@ -29,6 +29,8 @@ public class BinaryST
 			this.right = right;
 			this.parent = parent;
 			this.value = val;
+			this.count = 1;
+			this.vals_in_left_tree = 0;
 		}
 		
 	}
@@ -69,7 +71,50 @@ public class BinaryST
 	
 	public void add(String s)
 	{
-		// implementation
+	    if(root == null) {
+	        root = new Node(s);
+	        size++;
+	        distinct_size++;
+	        height++;
+	    } else {
+	        Node current = root;
+	        int cur_height = 1;
+	        while(true) {
+	            int comp = current.value.compareTo(s);
+	            if(comp == 0) {
+	            	current.count++;
+	            	size++;
+	                return;
+	            } else if (comp > 0) { //current.val > s
+	                if(current.left != null) {
+	                    current = current.left;
+	                    cur_height++;
+	                } else {
+	                    current.left = new Node(null,null,current, s);
+	                    size++;
+	                    distinct_size++;
+	                    if(cur_height == height){
+	                    	height++;
+	                    }
+	                    return;
+	                }
+	            } else { // current.value < s
+	                if(current.right != null) {
+	                    current = current.right;
+	                    cur_height++;
+	                } else {
+	                    current.right = new Node(null,null,current,s);
+	                    size++;
+	                    distinct_size++;
+	                    if(cur_height == height){
+	                    	height++;
+	                    }
+	                    return;
+	                }
+	            }
+	        }
+	        
+	    }
 	}
 	
 	public boolean search(String s)
@@ -95,7 +140,6 @@ public class BinaryST
                 return findRec(key, n.right);
             }
         }
-
     }
 	
 	public int frequency(String s)
@@ -108,9 +152,11 @@ public class BinaryST
 		}
 	}
 	
+	//TODO
 	public boolean remove(String s)
 	{
 		// implementation
+		return true;
 	}
 	
 	public String[] inOrder()
@@ -121,13 +167,13 @@ public class BinaryST
 	
 	private ArrayList<String> InOrderRec(Node n, ArrayList<String> arr){
         if(n.left != null) {
-            PreOrderRec(n.left, arr);
+            InOrderRec(n.left, arr);
         }
         for(int i=0; i < n.count; i++){
         	arr.add(n.value);
         }
         if(n.right != null) {
-            PreOrderRec(n.right, arr);
+            InOrderRec(n.right, arr);
         }
        return arr; 
         
@@ -152,9 +198,35 @@ public class BinaryST
        return arr; 
         
     }
-	
+	//TODO
+	//implementing this will require some changes to the add method
 	public int rankOf(String s)
 	{
 		// implementation
+		return 0;
 	}
+	
+	//TODO
+	//for testing... delete before submission
+	public static void main(String [] args)
+	{
+		BinaryST bst = new BinaryST();
+		bst.add("ABBA");
+		bst.add("BAAB");
+		bst.add("MONKEY");
+		bst.add("GUY");
+		bst.add("GUY");
+		bst.add("FIERRI");
+		bst.add("TREE");
+		bst.add("ZEBRA");
+		String[] inorder = bst.preOrder();
+		for(int i=0; i<inorder.length; i++){
+			System.out.print(inorder[i] + ", ");
+		}
+		System.out.println("\n height: " + bst.height);
+		System.out.println("size: " + bst.size);
+		System.out.println("distinct: " + bst.distinct_size);
+		
+	}
+	
 }
