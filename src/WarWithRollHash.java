@@ -13,15 +13,16 @@ import java.util.ArrayList;
 public class WarWithRollHash
 {
 	// member fields and methods
-	
+	//TODO
 	public WarWithRollHash(String[] s, int k)
 	{
 		// implementation
 	}
 	
+	//TODO
 	public ArrayList<String> compute2k()
 	{
-		// implementation
+		return null;
 	}
 }
 

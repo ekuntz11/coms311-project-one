@@ -33,6 +33,39 @@ public class BinaryST
 			this.vals_in_left_tree = 0;
 		}
 		
+		public boolean remove(String value, Node parent) {
+            if (value.compareTo(this.value) < 0) {
+                  if (left != null)
+                        return left.remove(value, this);
+                  else
+                        return false;
+            } else if (value.compareTo(this.value) > 0) {
+                  if (right != null)
+                        return right.remove(value, this);
+                  else
+                        return false;
+            } else {
+                  if (left != null && right != null) {
+                        this.value = right.minValueForRemoving();
+                        right.remove(this.value, this);
+                  } else if (parent.left == this) {
+                        parent.left = (left != null) ? left : right;
+                  } else if (parent.right == this) {
+                        parent.right = (left != null) ? left : right;
+                  }
+                  return true;
+            }
+      }
+ 
+      public String minValueForRemoving() {
+            if (left == null){
+            	return value;
+            } else {
+            	vals_in_left_tree--;
+            	return left.minValueForRemoving();
+            }                     
+      }
+		
 	}
 	// member fields and methods
 	
@@ -87,9 +120,11 @@ public class BinaryST
 	                return;
 	            } else if (comp > 0) { //current.val > s
 	                if(current.left != null) {
+	                	current.vals_in_left_tree++;
 	                    current = current.left;
 	                    cur_height++;
 	                } else {
+	                	current.vals_in_left_tree++;
 	                    current.left = new Node(null,null,current, s);
 	                    size++;
 	                    distinct_size++;
@@ -155,9 +190,41 @@ public class BinaryST
 	//TODO
 	public boolean remove(String s)
 	{
-		// implementation
-		return true;
+		if (root == null || s == null) {
+            return false;
+        } else {
+            Node n = findRecForDelete(s, root);
+            if (n == null) {
+                return false;
+            }
+            if(n.count > 1){
+            	n.count--;
+            	size--;
+            } else {
+            	root.remove(s, null);
+            	size--;
+            	distinct_size--;
+            }
+            return true;
+        }
 	}
+	
+	private Node findRecForDelete(String key, Node n) {
+        if (n == null) {
+            return null;
+        } else {
+            if (n.value.equals(key)) {
+                return n;
+            } else if (n.value.compareTo(key) > 0) {
+            	n.vals_in_left_tree--;
+                return findRecForDelete(key, n.left);
+            } else { // n.value < key
+                return findRecForDelete(key, n.right);
+            }
+        }
+    }
+	
+	
 	
 	public String[] inOrder()
 	{
@@ -198,13 +265,27 @@ public class BinaryST
        return arr; 
         
     }
-	//TODO
+
 	//implementing this will require some changes to the add method
 	public int rankOf(String s)
 	{
-		// implementation
-		return 0;
+		return rankHelper(s, root, 0);
 	}
+	
+	private int rankHelper(String key, Node n, int x) {
+        if (n == null) {
+            return -1;
+        } else {
+            if (n.value.equals(key)) {
+                return x + n.vals_in_left_tree;
+            } else if (n.value.compareTo(key) > 0) {
+                return rankHelper(key, n.left, x);
+            } else { // n.value < key
+            	x += 1 + n.vals_in_left_tree;
+                return rankHelper(key, n.right, x);
+            }
+        }
+    }
 	
 	//TODO
 	//for testing... delete before submission
@@ -219,6 +300,9 @@ public class BinaryST
 		bst.add("FIERRI");
 		bst.add("TREE");
 		bst.add("ZEBRA");
+		bst.add("PO");
+		bst.add("POOP");
+		bst.remove("MONKEY");
 		String[] inorder = bst.preOrder();
 		for(int i=0; i<inorder.length; i++){
 			System.out.print(inorder[i] + ", ");
@@ -226,6 +310,7 @@ public class BinaryST
 		System.out.println("\n height: " + bst.height);
 		System.out.println("size: " + bst.size);
 		System.out.println("distinct: " + bst.distinct_size);
+		System.out.println("rank : " + bst.rankOf("ZEBRA"));
 		
 	}
 	
