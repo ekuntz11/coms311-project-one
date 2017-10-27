@@ -46,16 +46,16 @@ public class WarWithBST
 	}
 	
 	//TODO
-		//for testing... delete before submission
-		public static void main(String [] args)
+	//for testing... delete before submission
+	public static void main(String [] args)
+	{
+		WarWithBST test = new WarWithBST(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		ArrayList<String> res = test.compute2k();
+		System.out.println("size: " + res.size());
+		for(int i =0; i< res.size(); i++)
 		{
-			WarWithBST test = new WarWithBST(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
-			ArrayList<String> res = test.compute2k();
-			System.out.println("size: " + res.size());
-			for(int i =0; i< res.size(); i++)
-			{
-				System.out.println("size: " + res.get(i));
-			}
+			System.out.println("size: " + res.get(i));
 		}
+	}
 }
 
