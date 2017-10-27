@@ -14,7 +14,6 @@ public class BinaryST
 {
 	private int size, distinct_size, height;
 	private Node root;
-	//private int height; //also not sure about this one
 	private class Node {
 		public Node left, right, parent;
 		public String value;
@@ -67,7 +66,6 @@ public class BinaryST
       }
 		
 	}
-	// member fields and methods
 	
 	public BinaryST()
 	{
@@ -187,7 +185,6 @@ public class BinaryST
 		}
 	}
 	
-	//TODO
 	public boolean remove(String s)
 	{
 		if (root == null || s == null) {
@@ -223,8 +220,6 @@ public class BinaryST
             }
         }
     }
-	
-	
 	
 	public String[] inOrder()
 	{

@@ -13,16 +13,49 @@ import java.util.ArrayList;
 public class WarWithBST
 {
 	// member fields and methods
+	BinaryST bst;
+	int k;
 	//TODO
 	public WarWithBST(String[] s, int k)
 	{
-		// implementation
+		bst = new BinaryST(s);
+		this.k = k;
 	}
 	
 	//TODO
 	public ArrayList<String> compute2k()
 	{
-		return null;
+		ArrayList<String> result = new ArrayList<String>();
+		String[] s = bst.inOrder();
+		for(int i=0; i<s.length;i++){
+			for(int j = i; j<s.length; j++){
+				String possible = s[i] + s[j];
+				boolean valid = true;
+				for(int x = 1; x<s[i].length(); x++){
+					if(!bst.search(possible.substring(x,x+k))){
+						valid = false;
+						break;
+					} 
+				}
+				if(valid){
+					result.add(possible);
+				}
+			}
+		}
+		return result;
 	}
+	
+	//TODO
+		//for testing... delete before submission
+		public static void main(String [] args)
+		{
+			WarWithBST test = new WarWithBST(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+			ArrayList<String> res = test.compute2k();
+			System.out.println("size: " + res.size());
+			for(int i =0; i< res.size(); i++)
+			{
+				System.out.println("size: " + res.get(i));
+			}
+		}
 }
 
