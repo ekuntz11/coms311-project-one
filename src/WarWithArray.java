@@ -13,16 +13,56 @@ import java.util.ArrayList;
 public class WarWithArray
 {
 	// member fields and methods
+	String[] s;
+	int k;
 	//TODO
 	public WarWithArray(String[] s, int k)
 	{
-		// implementation
+		this.s = s;
+		this.k = k;
+	}
+	
+	private boolean search(String com){
+		boolean found = false;
+		for(int i=0; i<s.length; i++){
+			if(s[i].compareTo(com) == 0){
+				return true;
+			}
+		}
+		return found;
 	}
 	
 	//TODO
 	public ArrayList<String> compute2k()
 	{
-		return null;
+		ArrayList<String> result = new ArrayList<String>();
+		for(int i=0; i<s.length;i++){
+			for(int j = i; j<s.length; j++){
+				String possible = s[i] + s[j];
+				boolean valid = true;
+				for(int x = 1; x<s[i].length(); x++){
+					if(search(possible.substring(x,x+k))){
+						valid = false;
+						break;
+					} 
+				}
+				if(valid){
+					result.add(possible);
+				}
+			}
+		}
+		return result;
+	}
+	
+	public static void main(String [] args)
+	{
+		WarWithBST test = new WarWithBST(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		ArrayList<String> res = test.compute2k();
+		System.out.println("size: " + res.size());
+		for(int i =0; i< res.size(); i++)
+		{
+			System.out.println("size: " + res.get(i));
+		}
 	}
 }
 
