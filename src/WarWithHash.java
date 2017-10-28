@@ -27,6 +27,7 @@ public class WarWithHash
 			h.add(s[i]);
 		}
 		this.k = k;
+		this.stringSet = s;
 	}
 	
 	//TODO
@@ -36,11 +37,11 @@ public class WarWithHash
 		boolean isValid = false;
 		
 		for(int i = 0; i < stringSet.length; i++) {
-			for(int j = i; j < stringSet.length; j++) {
+			for(int j = 0; j < stringSet.length; j++) {
 				String possible = stringSet[i] + stringSet[j];
 				isValid = true;
 				for(int x = 1; x < stringSet[i].length(); x++) {
-					if(h.contains(possible.substring(x, x+k))) {
+					if(!(h.contains(possible.substring(x, x+k)))) {
 						isValid = false;
 						break;
 					}
@@ -54,7 +55,13 @@ public class WarWithHash
 	}
 	
 	public static void main(String[] args) {
-		
+		WarWithHash test = new WarWithHash(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		ArrayList<String> res = test.compute2k();
+		System.out.println("size: " + res.size());
+		for(int i =0; i< res.size(); i++)
+		{
+			System.out.println("size: " + res.get(i));
+		}
 	}
 }
 
