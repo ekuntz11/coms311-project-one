@@ -38,12 +38,17 @@ public class WarWithArray
 		this.stringSet = s;
 	}
 	
-
+	/**
+	 * Method that returns a list of all
+	 * 2k-length substrings of an original set U,
+	 * such that S is a set of all k-length strings.
+	 * @return
+	 * 	List of all possible 2k-length substrings.
+	 */
 	public ArrayList<String> compute2k()
 	{
 		ArrayList<String> result = new ArrayList<String>();
 		for(int i=0; i<stringSet.length;i++){
-			/*changed j to start at zero so we get all possible substrings*/
 			for(int j = 0; j<stringSet.length; j++){
 				String possible = stringSet[i] + stringSet[j]; //make 2k-length string
 				boolean valid = true;
@@ -55,6 +60,7 @@ public class WarWithArray
 					} 
 				}
 				if(valid){
+					//if valid result, add to list of possible 2k-length substrings
 					result.add(possible);
 				}
 			}
@@ -64,7 +70,8 @@ public class WarWithArray
 	
 	public static void main(String [] args)
 	{
-		WarWithArray test = new WarWithArray(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		//WarWithArray test = new WarWithArray(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		WarWithArray test = new WarWithArray(new String[] {"AB", "CD", "EF"}, 2);
 		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)

@@ -27,10 +27,17 @@ public class WarWithHash
 			h.add(s[i]);
 		}
 		this.k = k;
-		this.stringSet = s;
+		this.stringSet = s; //store string array
 	}
 	
-	//TODO
+	/**
+	 * Method that computes all the possible
+	 * 2k-length substrings of the original set U,
+	 * where set S is a subset of all k-length
+	 * strings of U.
+	 * @return
+	 * 	ArrayList of all the 2k-length
+	 */
 	public ArrayList<String> compute2k()
 	{
 		ArrayList<String> result = new ArrayList<String>();
@@ -55,7 +62,7 @@ public class WarWithHash
 	}
 	
 	public static void main(String[] args) {
-		WarWithHash test = new WarWithHash(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		WarWithHash test = new WarWithHash(new String[]{"AC", "AD", "CD", "CC"}, 2);
 		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)
