@@ -9,20 +9,41 @@
 
 import java.util.ArrayList;
 
-
+/**
+ * Implementation of War with BST
+ * @author Eva Kuntz and Merritt Harvey
+ */
 public class WarWithBST
 {
-	// member fields and methods
-	BinaryST bst;
-	int k;
-	//TODO
+	/**
+	 * Binary Search Tree instance
+	 */
+	private BinaryST bst;
+	
+	/**
+	 * Integer to represent k-length substrings
+	 */
+	private int k;
+	
+	/**
+	 * Constructor
+	 * @param s
+	 * 	Subset S of set U with k-length strings
+	 * @param k
+	 * 	Integer to represent length of substrings
+	 */
 	public WarWithBST(String[] s, int k)
 	{
 		bst = new BinaryST(s);
 		this.k = k;
 	}
 	
-	//TODO
+	/**
+	 * Method to compute a valid set of all 2k-length
+	 * substrings of a set U, where set S is a subset of k-length
+	 * strings of U.
+	 * @return list of all possible 2k-length substrings of set S.
+	 */
 	public ArrayList<String> compute2k()
 	{
 		ArrayList<String> result = new ArrayList<String>();
