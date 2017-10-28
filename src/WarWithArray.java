@@ -28,16 +28,41 @@ public class WarWithArray
 	//TODO
 	public WarWithArray(String[] s, int k)
 	{
-		// implementation
 		this.k = k;
 		this.stringSet = s;
 	}
 	
-	//TODO
+
 	public ArrayList<String> compute2k()
 	{
 		ArrayList<String> result = new ArrayList<String>();
-		return null;
+		for(int i=0; i<stringSet.length;i++){
+			for(int j = i; j<stringSet.length; j++){
+				String possible = stringSet[i] + stringSet[j];
+				boolean valid = true;
+				for(int x = 1; x<stringSet[i].length(); x++){
+					if(isValidSubstring(possible.substring(x,x+k))){
+						valid = false;
+						break;
+					} 
+				}
+				if(valid){
+					result.add(possible);
+				}
+			}
+		}
+		return result;
+	}
+	
+	public static void main(String [] args)
+	{
+		WarWithBST test = new WarWithBST(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		ArrayList<String> res = test.compute2k();
+		System.out.println("size: " + res.size());
+		for(int i =0; i< res.size(); i++)
+		{
+			System.out.println("size: " + res.get(i));
+		}
 	}
 	
 	/**
@@ -55,15 +80,6 @@ public class WarWithArray
 		}
 		return false;
 	}
-	
-	public static void main(String[] args) {
-		String[] s = {"AA", "AB", "BC"};
-		WarWithArray wwa = new WarWithArray(s, 2);
-		String[] testString = {"AA", "AB", "BC", "BD", "BA"};
-		for(int i = 0; i < testString.length; i++) {
-			System.out.println("String: " + testString[i] + " Valid: " + wwa.isValidSubstring(testString[i]));
-		}
-		
-	}
+
 }
 
