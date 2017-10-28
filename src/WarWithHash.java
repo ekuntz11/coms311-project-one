@@ -8,21 +8,53 @@
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
-
+/**
+ * Implementation of War With Hash
+ * @author Eva Kuntz & Merritt Harvey
+ */
 public class WarWithHash
 {
-	// member fields and methods
-	//TODO
+	private int k;
+	private String[] stringSet;
+	private HashSet<String> h = new HashSet<String>();
+	
 	public WarWithHash(String[] s, int k)
 	{
-		// implementation
+		//add all elements from the string array to the hashset
+		for(int i = 0; i < s.length; i++) {
+			h.add(s[i]);
+		}
+		this.k = k;
 	}
 	
 	//TODO
 	public ArrayList<String> compute2k()
 	{
-		return null;
+		ArrayList<String> result = new ArrayList<String>();
+		boolean isValid = false;
+		
+		for(int i = 0; i < stringSet.length; i++) {
+			for(int j = i; j < stringSet.length; j++) {
+				String possible = stringSet[i] + stringSet[j];
+				isValid = true;
+				for(int x = 1; x < stringSet[i].length(); x++) {
+					if(h.contains(possible.substring(x, x+k))) {
+						isValid = false;
+						break;
+					}
+				}
+				if(isValid) {
+					result.add(possible);
+				}
+			}
+		}
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 }
 

@@ -25,7 +25,13 @@ public class WarWithArray
 	 */
 	private String[] stringSet;
 	
-	//TODO
+	/**
+	 * Constructor
+	 * @param s
+	 * 	Set of substrings
+	 * @param k
+	 * 	length of each string
+	 */
 	public WarWithArray(String[] s, int k)
 	{
 		this.k = k;
@@ -37,11 +43,13 @@ public class WarWithArray
 	{
 		ArrayList<String> result = new ArrayList<String>();
 		for(int i=0; i<stringSet.length;i++){
-			for(int j = i; j<stringSet.length; j++){
-				String possible = stringSet[i] + stringSet[j];
+			/*changed j to start at zero so we get all possible substrings*/
+			for(int j = 0; j<stringSet.length; j++){
+				String possible = stringSet[i] + stringSet[j]; //make 2k-length string
 				boolean valid = true;
 				for(int x = 1; x<stringSet[i].length(); x++){
-					if(isValidSubstring(possible.substring(x,x+k))){
+					/*if not a valid substring, break and move on to next possible substring*/
+					if(!(isValidSubstring(possible.substring(x,x+k)))){
 						valid = false;
 						break;
 					} 
@@ -56,7 +64,7 @@ public class WarWithArray
 	
 	public static void main(String [] args)
 	{
-		WarWithBST test = new WarWithBST(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		WarWithArray test = new WarWithArray(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
 		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)
