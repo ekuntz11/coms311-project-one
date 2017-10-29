@@ -35,13 +35,13 @@ public class WarWithRollHash1
 		stringSet = s;
 		//add <string's hashcode, string> to hashtable
 		for(int i = 0; i < s.length; i++) {
-			table.put((long)(hash(s[i])*Math.pow(R, i)), s[i]);
+			table.put((long)(hash(s[i])), s[i]);
 		}
 	}
 	
 	private long hash(String key)
     { 
-		long hash = 0;;
+		long hash = 0;
         for (int j = 0; j < k; j++){
         	hash += key.charAt(j)*Math.pow(R, j); 
         }   
