@@ -7,8 +7,10 @@
 // DO NOT INCLUDE LIBRARIES OUTSIDE OF THE JAVA STANDARD LIBRARY
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
 /**
  * Implementation of War with Roll Hash
@@ -16,9 +18,33 @@ import java.util.Hashtable;
  */
 public class WarWithRollHash
 {
+	/**
+	 * 'Pattern' length
+	 */
 	private int k;
+	/**
+	 * Array for set of substrings
+	 */
 	private String[] stringSet;
-	private Hashtable<Integer, String> table = new Hashtable<Integer, String>();
+	/**
+	 * Hash table to store the set of strings
+	 */
+	private Hashtable<Long, String> table = new Hashtable<Long, String>();
+	
+    /**
+     * Large prime number        
+     */
+    private long Q;
+    
+    /**
+     * Radix         
+     */
+    private int R; 
+    
+    /**
+     * R^(K-1) % Q
+     */        
+    private long RM; 
 	
 	/**
 	 * Constructor
@@ -31,10 +57,12 @@ public class WarWithRollHash
 	public WarWithRollHash(String[] s, int k)
 	{
 		this.k = k;
+		this.R = 256;
 		stringSet = s;
+		this.Q = generateRandomPrime(); //generate a random prime number
 		//add <string's hashcode, string> to hashtable
 		for(int i = 0; i < s.length; i++) {
-			table.put(s[i].hashCode(), s[i]);
+			table.put(hash(s[i]), s[i]);
 		}
 	}
 	
@@ -48,7 +76,7 @@ public class WarWithRollHash
 				boolean isValid = false;
 				for(int x = 1; x < stringSet[i].length(); x++) {
 					//calculate the hashcode of substring we are determining if valid or not
-					int possibleHash = possible.substring(x, x+k).hashCode();
+					long possibleHash = hash(possible.substring(x, x+k));
 				}
 				
 				if(isValid) {
@@ -57,6 +85,31 @@ public class WarWithRollHash
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * Method to compute hashcode of a string
+	 * @param s
+	 * 	String to compute hashcode for
+	 * @return
+	 * 	hashcode of the input string
+	 */
+	public long hash(String s) {
+		long hash = 0;
+		for(int i = 0; i < k; i++) {
+			hash = (R * hash + s.charAt(i)) % Q;
+		}
+		return hash;
+	}
+	
+	/**
+	 * Method that generates a random prime number
+	 * @return
+	 * 	random prime number
+	 */
+	public long generateRandomPrime(){
+		BigInteger prime = BigInteger.probablePrime(31, new Random());
+		return prime.longValue();
 	}
 }
 
