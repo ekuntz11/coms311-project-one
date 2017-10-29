@@ -58,15 +58,28 @@ public class WarWithRollHash
 	{
 		this.k = k;
 		this.R = 256;
-		stringSet = s;
-		this.Q = generateRandomPrime(); //generate a random prime number
+		this.Q = generateRandomPrime(); //generate a random prime number		
+		//precompute R^(k-1) % Q
+		RM = 1;
+        for (int i = 1; i <= this.k - 1; i++){
+        	RM = (R * RM) % Q;
+        }
+        
 		//add <string's hashcode, string> to hashtable
 		for(int i = 0; i < s.length; i++) {
 			table.put(hash(s[i]), s[i]);
 		}
+		stringSet = s;
 	}
 	
-	//TODO
+	/**
+	 * Method that computes all the possible
+	 * 2k-length substrings of the original set U,
+	 * where set S is a subset of all k-length
+	 * strings of U.
+	 * @return
+	 * 	ArrayList of all the 2k-length substrings.
+	 */
 	public ArrayList<String> compute2k()
 	{
 		ArrayList<String> result = new ArrayList<String>();
@@ -75,7 +88,7 @@ public class WarWithRollHash
 				String possible = stringSet[i] + stringSet[j];
 				boolean isValid = false;
 				for(int x = 1; x < stringSet[i].length(); x++) {
-					//calculate the hashcode of substring we are determining if valid or not
+					//calculate the hashcode of the substring of 'possible' string
 					long possibleHash = hash(possible.substring(x, x+k));
 				}
 				

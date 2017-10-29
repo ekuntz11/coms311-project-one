@@ -39,10 +39,12 @@ public class WarWithBST
 	}
 	
 	/**
-	 * Method to compute a valid set of all 2k-length
-	 * substrings of a set U, where set S is a subset of k-length
+	 * Method that computes all the possible
+	 * 2k-length substrings of the original set U,
+	 * where set S is a subset of all k-length
 	 * strings of U.
-	 * @return list of all possible 2k-length substrings of set S.
+	 * @return
+	 * 	ArrayList of all the 2k-length substrings.
 	 */
 	public ArrayList<String> compute2k()
 	{

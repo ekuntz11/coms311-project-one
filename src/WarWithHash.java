@@ -45,7 +45,7 @@ public class WarWithHash
 	 * where set S is a subset of all k-length
 	 * strings of U.
 	 * @return
-	 * 	ArrayList of all the 2k-length
+	 * 	ArrayList of all the 2k-length substrings
 	 */
 	public ArrayList<String> compute2k()
 	{
