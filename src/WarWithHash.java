@@ -20,6 +20,14 @@ public class WarWithHash
 	private String[] stringSet;
 	private HashSet<String> h = new HashSet<String>();
 	
+	/**
+	 * Constructor
+	 * @param s
+	 * 	Subset S from which to calculate all possible
+	 * 	2k-length substrings from
+	 * @param k
+	 * 	length of each string in set S
+	 */
 	public WarWithHash(String[] s, int k)
 	{
 		//add all elements from the string array to the hashset
@@ -49,12 +57,15 @@ public class WarWithHash
 				String possible = stringSet[i] + stringSet[j];
 				isValid = true;
 				for(int x = 1; x < stringSet[i].length(); x++) {
+					/*if not contained in hashset, break from loop as this
+					2k-length substring is not valid*/
 					if(!(h.contains(possible.substring(x, x+k)))) {
 						isValid = false;
 						break;
 					}
 				}
 				if(isValid) {
+					//if valid, add to result list
 					result.add(possible);
 				}
 			}

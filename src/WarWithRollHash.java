@@ -10,14 +10,24 @@
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-
+/**
+ * Implementation of War with Roll Hash
+ * @author Eva Kuntz & Merritt Harvey
+ */
 public class WarWithRollHash
 {
 	private int k;
 	private String[] stringSet;
 	private Hashtable<Integer, String> table = new Hashtable<Integer, String>();
 	
-	//TODO
+	/**
+	 * Constructor
+	 * @param s
+	 * 	Subset S from which to calculate all possible
+	 * 	2k-length substrings from
+	 * @param k
+	 * 	length of all substrings in set S
+	 */
 	public WarWithRollHash(String[] s, int k)
 	{
 		this.k = k;
@@ -31,7 +41,22 @@ public class WarWithRollHash
 	//TODO
 	public ArrayList<String> compute2k()
 	{
-		return null;
+		ArrayList<String> result = new ArrayList<String>();
+		for(int i = 0; i < stringSet.length; i++) {
+			for(int j = 0; j < stringSet.length; j++) {
+				String possible = stringSet[i] + stringSet[j];
+				boolean isValid = false;
+				for(int x = 1; x < stringSet[i].length(); x++) {
+					//calculate the hashcode of substring we are determining if valid or not
+					int possibleHash = possible.substring(x, x+k).hashCode();
+				}
+				
+				if(isValid) {
+					result.add(possible);
+				}
+			}
+		}
+		return result;
 	}
 }
 
