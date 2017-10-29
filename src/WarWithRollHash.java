@@ -111,10 +111,10 @@ public class WarWithRollHash
 	//remove before submission
 	public static void main(String [] args)
 	{
-		WarWithRollHash test = new WarWithRollHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG", "BCDB", "CDBC", "DBCD"}, 4);
+		//WarWithRollHash test = new WarWithRollHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG", "BCDB", "CDBC", "DBCD"}, 4);
 		//WarWithRollHash test = new WarWithRollHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
 		//WarWithRollHash test = new WarWithRollHash(new String[]{"ABC", "DEF", "BCD", "CDE"}, 3);
-		//WarWithRollHash test = new WarWithRollHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG"}, 4);
+		WarWithRollHash test = new WarWithRollHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG"}, 4);
 		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)
