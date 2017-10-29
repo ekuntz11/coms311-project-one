@@ -81,8 +81,7 @@ public class WarWithRollHash
 		for(int i = 0; i < stringSet.length; i++) {
 			for(int j = 0; j < stringSet.length; j++) {
 				//possible 2k-length substring
-				String possible = stringSet[i] + stringSet[j];
-				
+				String possible = stringSet[i] + stringSet[j];				
 				/*get hashcode of the first k-length substring of the
 				possible 2k-length substring*/
 				long curHashCode = hash(possible.substring(1,(int)(1+k)));
@@ -110,8 +109,10 @@ public class WarWithRollHash
 	//remove before submission
 	public static void main(String [] args)
 	{
-		WarWithRollHash test = new WarWithRollHash(new String[]{"ABA", "ACD", "BAA", "AAC", "CDB", "DBA"}, 3);
+		//WarWithRollHash test = new WarWithRollHash(new String[]{"ABA", "ACD", "BAA", "AAC", "CDB", "DBA"}, 3);
 		//WarWithRollHash test = new WarWithRollHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+		//WarWithRollHash test = new WarWithRollHash(new String[]{"ABC", "DEF", "BCD", "CDE"}, 3);
+		WarWithRollHash test = new WarWithRollHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG"}, 4);
 		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)

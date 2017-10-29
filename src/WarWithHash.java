@@ -84,8 +84,8 @@ public class WarWithHash
 	}
 	
 	public static void main(String[] args) {
-		//String[] s = new String[]{"AC", "AD", "CD", "CC"};
-		WarWithHash test = new WarWithHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+		//WarWithHash test = new WarWithHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+		WarWithHash test = new WarWithHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG"}, 4);
 		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)

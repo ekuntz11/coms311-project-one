@@ -86,15 +86,15 @@ public class WarWithRollHashOld
 		for(int i = 0; i < stringSet.length; i++) {
 			for(int j = 0; j < stringSet.length; j++) {
 				String possible = stringSet[i] + stringSet[j];
-				boolean isValid = false;
+				long possibleHash = hash(possible.substring(1, 1+k));
+				boolean isValid = true;
 				for(int x = 1; x < stringSet[i].length(); x++) {
 					//calculate the hashcode of the substring of 'possible' string
-					long possibleHash = hash(possible.substring(x, x+k));
 					if(x!=1){
 						//txtHash = (txtHash + Q - RM*txt.charAt(i - M) % Q) % Q;
 						//txtHash = (txtHash * R + txt.charAt(i)) % Q;
-						possibleHash = ((possibleHash + Q - RM*possible.charAt((int)(x - 1))) % Q) %Q;
-						possibleHash = (possibleHash * R + possible.charAt(k+x+1)) % Q;
+						possibleHash = (possibleHash + Q - RM*possible.charAt((int)(x - 1)) % Q) %Q;
+						possibleHash = (possibleHash * R + possible.charAt(x)) % Q;
 					}
 					if(!table.containsKey(possibleHash)){
 						isValid = false;
@@ -138,7 +138,9 @@ public class WarWithRollHashOld
 	//for testing... delete before submission
 			public static void main(String [] args)
 			{
-				WarWithRollHashOld test = new WarWithRollHashOld(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+				//WarWithRollHashOld test = new WarWithRollHashOld(new String[]{"ABC", "DEF", "BCD", "CDE"}, 3);
+				WarWithRollHashOld test = new WarWithRollHashOld(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG"}, 4);
+				//WarWithRollHashOld test = new WarWithRollHashOld(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
 				ArrayList<String> res = test.compute2k();
 				System.out.println("size: " + res.size());
 				for(int i =0; i< res.size(); i++)
