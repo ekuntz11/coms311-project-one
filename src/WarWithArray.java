@@ -67,19 +67,7 @@ public class WarWithArray
 		}
 		return result;
 	}
-	
-	public static void main(String [] args)
-	{
-		//WarWithArray test = new WarWithArray(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
-		WarWithArray test = new WarWithArray(new String[] {"AB", "CD", "EF"}, 2);
-		ArrayList<String> res = test.compute2k();
-		System.out.println("size: " + res.size());
-		for(int i =0; i< res.size(); i++)
-		{
-			System.out.println("size: " + res.get(i));
-		}
-	}
-	
+		
 	/**
 	 * Determines whether the input string is a valid
 	 * substring of set S or not.
@@ -94,6 +82,20 @@ public class WarWithArray
 				return true;
 		}
 		return false;
+	}
+	
+	//TODO
+	//delete before submission
+	public static void main(String [] args)
+	{
+		//WarWithArray test = new WarWithArray(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		WarWithArray test = new WarWithArray(new String[] {"AB", "CD", "EF"}, 2);
+		ArrayList<String> res = test.compute2k();
+		System.out.println("size: " + res.size());
+		for(int i =0; i< res.size(); i++)
+		{
+			System.out.println("size: " + res.get(i));
+		}
 	}
 
 }

@@ -16,9 +16,18 @@ import java.util.HashSet;
  */
 public class WarWithHash
 {
+	/**
+	 * Length of each substring
+	 */
 	private int k;
+	/**
+	 * Set of Strings
+	 */
 	private String[] stringSet;
-	private HashSet<String> h = new HashSet<String>();
+	/**
+	 * Hashset to store strings
+	 */
+	private HashSet<String> set = new HashSet<String>();
 	
 	/**
 	 * Constructor
@@ -32,7 +41,7 @@ public class WarWithHash
 	{
 		//add all elements from the string array to the hashset
 		for(int i = 0; i < s.length; i++) {
-			h.add(s[i]);
+			set.add(s[i]);
 		}
 		this.k = k;
 		this.stringSet = s; //store string array
@@ -54,12 +63,13 @@ public class WarWithHash
 		
 		for(int i = 0; i < stringSet.length; i++) {
 			for(int j = 0; j < stringSet.length; j++) {
+				//possible 2k-length substring
 				String possible = stringSet[i] + stringSet[j];
 				isValid = true;
 				for(int x = 1; x < stringSet[i].length(); x++) {
 					/*if not contained in hashset, break from loop as this
 					2k-length substring is not valid*/
-					if(!(h.contains(possible.substring(x, x+k)))) {
+					if(!(set.contains(possible.substring(x, x+k)))) {
 						isValid = false;
 						break;
 					}

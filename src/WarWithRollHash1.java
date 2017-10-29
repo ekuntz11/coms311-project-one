@@ -16,10 +16,22 @@ import java.util.Hashtable;
  */
 public class WarWithRollHash1
 {
+	/**
+	 * Length of each substring
+	 */
 	private long k;
+	/**
+	 * Set of the substrings
+	 */
 	private String[] stringSet;
+	/**
+	 * Hashtable to store <hashcode, string> pairs
+	 */
 	private Hashtable<Long, String> table = new Hashtable<Long, String>();
-	long R = 256;
+	/**
+	 * Radix
+	 */
+	private long R = 256;
 	
 	/**
 	 * Constructor
@@ -33,12 +45,19 @@ public class WarWithRollHash1
 	{
 		this.k = k;
 		stringSet = s;
-		//add <string's hashcode, string> to hashtable
+		//add <hashcode, string> key-value pair to hashtable
 		for(int i = 0; i < s.length; i++) {
 			table.put((long)(hash(s[i])), s[i]);
 		}
 	}
 	
+	/**
+	 * Method to compute hashcode of a string
+	 * @param s
+	 * 	String to compute hashcode for
+	 * @return
+	 * 	hashcode of the input string
+	 */
 	private long hash(String key)
     { 
 		long hash = 0;
@@ -48,28 +67,38 @@ public class WarWithRollHash1
         return hash; 
     } 
 	
-	//TODO
+	/**
+	 * Method that computes all the possible
+	 * 2k-length substrings of the original set U,
+	 * where set S is a subset of all k-length
+	 * strings of U.
+	 * @return
+	 * 	ArrayList of all the 2k-length substrings.
+	 */
 	public ArrayList<String> compute2k()
 	{
 		ArrayList<String> result = new ArrayList<String>();
 		for(int i = 0; i < stringSet.length; i++) {
 			for(int j = 0; j < stringSet.length; j++) {
+				//possible 2k-length substring
 				String possible = stringSet[i] + stringSet[j];
-				String ght = possible.substring(1,(int)(1+k));
+				
+				/*get hashcode of the first k-length substring of the
+				possible 2k-length substring*/
 				long curHashCode = hash(possible.substring(1,(int)(1+k)));
 				boolean isValid = true;
 				for(int x = 1; x < stringSet[i].length(); x++) {
-					//calculate the hashcode of substring we are determining if valid or not
 					if(x!=1){
+						//roll hash here
 						curHashCode = (long)(curHashCode - possible.charAt((int)(x-1))*Math.pow(R,k-(x-1)))*R + possible.charAt((int)(k+x));
 					}
 					if(!table.containsKey(curHashCode)){
 						isValid = false;
 						break;
 					} 
-				}
-				
+				}				
 				if(isValid) {
+					//if valid, add the possible 2k-length substring to the result list
 					result.add(possible);
 				}
 			}
@@ -78,16 +107,17 @@ public class WarWithRollHash1
 	}
 	
 	//TODO
-		//for testing... delete before submission
-		public static void main(String [] args)
+	//remove before submission
+	public static void main(String [] args)
+	{
+		//WarWithRollHash1 test = new WarWithRollHash1(new String[]{"ABA", "ACD", "BAA", "AAC", "CDB", "DBA"}, 3);
+		WarWithRollHash1 test = new WarWithRollHash1(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+		ArrayList<String> res = test.compute2k();
+		System.out.println("size: " + res.size());
+		for(int i =0; i< res.size(); i++)
 		{
-			WarWithRollHash1 test = new WarWithRollHash1(new String[]{"ABA", "ACD", "BAA", "AAC", "CDB", "DBA"}, 3);
-			ArrayList<String> res = test.compute2k();
-			System.out.println("size: " + res.size());
-			for(int i =0; i< res.size(); i++)
-			{
-				System.out.println("size: " + res.get(i));
-			}
+			System.out.println("size: " + res.get(i));
 		}
+	}
 }
 
