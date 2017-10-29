@@ -8,15 +8,24 @@
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 
 public class WarWithRollHash
 {
-	// member fields and methods
+	private int k;
+	private String[] stringSet;
+	private Hashtable<Integer, String> table = new Hashtable<Integer, String>();
+	
 	//TODO
 	public WarWithRollHash(String[] s, int k)
 	{
-		// implementation
+		this.k = k;
+		stringSet = s;
+		//add <string's hashcode, string> to hashtable
+		for(int i = 0; i < s.length; i++) {
+			table.put(s[i].hashCode(), s[i]);
+		}
 	}
 	
 	//TODO
