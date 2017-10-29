@@ -7,10 +7,8 @@
 // DO NOT INCLUDE LIBRARIES OUTSIDE OF THE JAVA STANDARD LIBRARY
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Random;
 
 /**
  * Implementation of War with Roll Hash
@@ -19,32 +17,21 @@ import java.util.Random;
 public class WarWithRollHash
 {
 	/**
-	 * 'Pattern' length
+	 * Length of each substring
 	 */
-	private int k;
+	private long k;
 	/**
-	 * Array for set of substrings
+	 * Set of the substrings
 	 */
 	private String[] stringSet;
 	/**
-	 * Hash table to store the set of strings
+	 * Hashtable to store <hashcode, string> pairs
 	 */
 	private Hashtable<Long, String> table = new Hashtable<Long, String>();
-	
-    /**
-     * Large prime number        
-     */
-    private long Q;
-    
-    /**
-     * Radix         
-     */
-    private int R; 
-    
-    /**
-     * R^(K-1) % Q
-     */        
-    private long RM; 
+	/**
+	 * Radix
+	 */
+	private long R = 256;
 	
 	/**
 	 * Constructor
@@ -57,20 +44,28 @@ public class WarWithRollHash
 	public WarWithRollHash(String[] s, int k)
 	{
 		this.k = k;
-		this.R = 256;
-		this.Q = generateRandomPrime(); //generate a random prime number		
-		//precompute R^(k-1) % Q
-		RM = 1;
-        for (int i = 1; i <= this.k - 1; i++){
-        	RM = (R * RM) % Q;
-        }
-        
-		//add <string's hashcode, string> to hashtable
-		for(int i = 0; i < s.length; i++) {
-			table.put(hash(s[i]), s[i]);
-		}
 		stringSet = s;
+		//add <hashcode, string> key-value pair to hashtable
+		for(int i = 0; i < s.length; i++) {
+			table.put((long)(hash(s[i])), s[i]);
+		}
 	}
+	
+	/**
+	 * Method to compute hashcode of a string
+	 * @param s
+	 * 	String to compute hashcode for
+	 * @return
+	 * 	hashcode of the input string
+	 */
+	private long hash(String key)
+    { 
+		long hash = 0;
+        for (int j = 0; j < k; j++){
+        	hash += key.charAt(j)*Math.pow(R, k-j-1); 
+        }   
+        return hash; 
+    } 
 	
 	/**
 	 * Method that computes all the possible
@@ -85,24 +80,25 @@ public class WarWithRollHash
 		ArrayList<String> result = new ArrayList<String>();
 		for(int i = 0; i < stringSet.length; i++) {
 			for(int j = 0; j < stringSet.length; j++) {
+				//possible 2k-length substring
 				String possible = stringSet[i] + stringSet[j];
-				boolean isValid = false;
+				
+				/*get hashcode of the first k-length substring of the
+				possible 2k-length substring*/
+				long curHashCode = hash(possible.substring(1,(int)(1+k)));
+				boolean isValid = true;
 				for(int x = 1; x < stringSet[i].length(); x++) {
-					//calculate the hashcode of the substring of 'possible' string
-					long possibleHash = hash(possible.substring(x, x+k));
 					if(x!=1){
-						//txtHash = (txtHash + Q - RM*txt.charAt(i - M) % Q) % Q;
-						//txtHash = (txtHash * R + txt.charAt(i)) % Q;
-						possibleHash = ((possibleHash + Q - RM*possible.charAt((int)(x - 1))) % Q) %Q;
-						possibleHash = (possibleHash * R + possible.charAt(k+x+1)) % Q;
+						//roll hash here
+						curHashCode = (long)(curHashCode - possible.charAt((int)(x-1))*Math.pow(R,k-(x-1)))*R + possible.charAt((int)(k+x));
 					}
-					if(!table.containsKey(possibleHash)){
+					if(!table.containsKey(curHashCode)){
 						isValid = false;
 						break;
 					} 
-				}
-				
+				}				
 				if(isValid) {
+					//if valid, add the possible 2k-length substring to the result list
 					result.add(possible);
 				}
 			}
@@ -110,41 +106,18 @@ public class WarWithRollHash
 		return result;
 	}
 	
-	/**
-	 * Method to compute hashcode of a string
-	 * @param s
-	 * 	String to compute hashcode for
-	 * @return
-	 * 	hashcode of the input string
-	 */
-	public long hash(String s) {
-		long hash = 0;
-		for(int i = 0; i < k; i++) {
-			hash = (R * hash + s.charAt(i)) % Q;
+	//TODO
+	//remove before submission
+	public static void main(String [] args)
+	{
+		//WarWithRollHash1 test = new WarWithRollHash1(new String[]{"ABA", "ACD", "BAA", "AAC", "CDB", "DBA"}, 3);
+		WarWithRollHash test = new WarWithRollHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+		ArrayList<String> res = test.compute2k();
+		System.out.println("size: " + res.size());
+		for(int i =0; i< res.size(); i++)
+		{
+			System.out.println("size: " + res.get(i));
 		}
-		return hash;
 	}
-	
-	/**
-	 * Method that generates a random prime number
-	 * @return
-	 * 	random prime number
-	 */
-	public long generateRandomPrime(){
-		BigInteger prime = BigInteger.probablePrime(31, new Random());
-		return prime.longValue();
-	}
-	
-	//for testing... delete before submission
-			public static void main(String [] args)
-			{
-				WarWithRollHash test = new WarWithRollHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
-				ArrayList<String> res = test.compute2k();
-				System.out.println("size: " + res.size());
-				for(int i =0; i< res.size(); i++)
-				{
-					System.out.println("size: " + res.get(i));
-				}
-			}
 }
 
