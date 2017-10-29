@@ -89,7 +89,9 @@ public class WarWithRollHash
 				for(int x = 1; x < stringSet[i].length(); x++) {
 					if(x!=1){
 						//roll hash here
-						curHashCode = (long)(curHashCode - possible.charAt((int)(x-1))*Math.pow(R,k-(x-1)))*R + possible.charAt((int)(k+x-1));
+						//toremove = possible.charAt((int)(x-1)); //these chars for debugging purposes only
+						//toadd = possible.charAt((int)(k+x-1));
+						curHashCode = (long)(curHashCode - possible.charAt((int)(x-1))*Math.pow(R,k-1))*R + possible.charAt((int)(k+x-1));
 					}
 					if(!table.containsKey(curHashCode)){
 						isValid = false;
@@ -109,10 +111,10 @@ public class WarWithRollHash
 	//remove before submission
 	public static void main(String [] args)
 	{
-		//WarWithRollHash test = new WarWithRollHash(new String[]{"ABA", "ACD", "BAA", "AAC", "CDB", "DBA"}, 3);
+		WarWithRollHash test = new WarWithRollHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG", "BCDB", "CDBC", "DBCD"}, 4);
 		//WarWithRollHash test = new WarWithRollHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
 		//WarWithRollHash test = new WarWithRollHash(new String[]{"ABC", "DEF", "BCD", "CDE"}, 3);
-		WarWithRollHash test = new WarWithRollHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG"}, 4);
+		//WarWithRollHash test = new WarWithRollHash(new String[]{"ABCD", "EFGH", "BCDE", "CDEF", "DEFG"}, 4);
 		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)
