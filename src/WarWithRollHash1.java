@@ -43,7 +43,7 @@ public class WarWithRollHash1
     { 
 		long hash = 0;
         for (int j = 0; j < k; j++){
-        	hash += key.charAt(j)*Math.pow(R, j); 
+        	hash += key.charAt(j)*Math.pow(R, k-j-1); 
         }   
         return hash; 
     } 
@@ -61,7 +61,7 @@ public class WarWithRollHash1
 				for(int x = 1; x < stringSet[i].length(); x++) {
 					//calculate the hashcode of substring we are determining if valid or not
 					if(x!=1){
-						curHashCode = (curHashCode - possible.charAt((int)(k+x)))*R + possible.charAt((int)(k+x+1));
+						curHashCode = (long)(curHashCode - possible.charAt((int)(x-1))*Math.pow(R,k-(x-1)))*R + possible.charAt((int)(k+x));
 					}
 					if(!table.containsKey(curHashCode)){
 						isValid = false;
@@ -81,7 +81,7 @@ public class WarWithRollHash1
 		//for testing... delete before submission
 		public static void main(String [] args)
 		{
-			WarWithRollHash1 test = new WarWithRollHash1(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+			WarWithRollHash1 test = new WarWithRollHash1(new String[]{"ABA", "ACD", "BAA", "AAC", "CDB", "DBA"}, 3);
 			ArrayList<String> res = test.compute2k();
 			System.out.println("size: " + res.size());
 			for(int i =0; i< res.size(); i++)
