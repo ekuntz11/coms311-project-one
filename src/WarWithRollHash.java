@@ -90,6 +90,16 @@ public class WarWithRollHash
 				for(int x = 1; x < stringSet[i].length(); x++) {
 					//calculate the hashcode of the substring of 'possible' string
 					long possibleHash = hash(possible.substring(x, x+k));
+					if(x!=1){
+						//txtHash = (txtHash + Q - RM*txt.charAt(i - M) % Q) % Q;
+						//txtHash = (txtHash * R + txt.charAt(i)) % Q;
+						possibleHash = ((possibleHash + Q - RM*possible.charAt((int)(x - 1))) % Q) %Q;
+						possibleHash = (possibleHash * R + possible.charAt(k+x+1)) % Q;
+					}
+					if(!table.containsKey(possibleHash)){
+						isValid = false;
+						break;
+					} 
 				}
 				
 				if(isValid) {
@@ -124,5 +134,17 @@ public class WarWithRollHash
 		BigInteger prime = BigInteger.probablePrime(31, new Random());
 		return prime.longValue();
 	}
+	
+	//for testing... delete before submission
+			public static void main(String [] args)
+			{
+				WarWithRollHash test = new WarWithRollHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+				ArrayList<String> res = test.compute2k();
+				System.out.println("size: " + res.size());
+				for(int i =0; i< res.size(); i++)
+				{
+					System.out.println("size: " + res.get(i));
+				}
+			}
 }
 

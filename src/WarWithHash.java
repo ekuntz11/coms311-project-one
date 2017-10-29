@@ -74,17 +74,14 @@ public class WarWithHash
 	}
 	
 	public static void main(String[] args) {
-		String[] s = new String[]{"AC", "AD", "CD", "CC"};
-		WarWithHash test = new WarWithHash(new String[]{"AC", "AD", "CD", "CC"}, 2);
-		for(int i = 0; i < s.length; i++) {
-			System.out.println(s[i].hashCode());
-		}
-		/*ArrayList<String> res = test.compute2k();
+		//String[] s = new String[]{"AC", "AD", "CD", "CC"};
+		WarWithHash test = new WarWithHash(new String[]{"AA", "AB", "CD", "EF", "DE", "BC"}, 2);
+		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)
 		{
 			System.out.println("size: " + res.get(i));
-		}*/
+		}
 	}
 }
 
