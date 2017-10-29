@@ -51,7 +51,7 @@ public class WarWithBST
 		ArrayList<String> result = new ArrayList<String>();
 		String[] s = bst.inOrder();
 		for(int i=0; i<s.length;i++){
-			for(int j = i; j<s.length; j++){
+			for(int j = 0; j<s.length; j++){
 				String possible = s[i] + s[j];
 				boolean valid = true;
 				for(int x = 1; x<s[i].length(); x++){
@@ -72,7 +72,7 @@ public class WarWithBST
 	//for testing... delete before submission
 	public static void main(String [] args)
 	{
-		WarWithBST test = new WarWithBST(new String[]{"AB", "CD", "EF", "DE", "BC"}, 2);
+		WarWithBST test = new WarWithBST(new String[]{"ABA", "ACD", "BAA", "AAC", "CDB", "DBA"}, 3);
 		ArrayList<String> res = test.compute2k();
 		System.out.println("size: " + res.size());
 		for(int i =0; i< res.size(); i++)
